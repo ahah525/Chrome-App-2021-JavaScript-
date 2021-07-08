@@ -13,6 +13,9 @@ function onLoginSubmit(event) {
 
   const username = loginInput.value;    // loginInput의 value = 내가 입력한 값
 
+  // localStorage에 username 저장하기
+  localStorage.setItem("username", username);
+
   /*h1에 text 값 넣기(방법 2가지)*/
   //greeting.innerText = "Hello " + username;   // +로 연결
   greeting.innerText = `Hello ${username}`;     // 백틱 기호, ${변수명}
