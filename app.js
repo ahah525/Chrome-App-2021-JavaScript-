@@ -2,7 +2,9 @@ const loginForm = document.querySelector("#login-form");
 const loginInput = document.querySelector("#login-form input");
 const greeting = document.querySelector("#greeting");
 
+// string 반복 사용할 경우 변수로 고정(오타 위험)
 const HIDDEN_CLASSNAME = "hidden";
+const USERNAME_KEY = "username";
 
 /* 사용자가 입력한 값이 h1에 보여지고 form은 숨기기 */
 function onLoginSubmit(event) {
@@ -14,16 +16,28 @@ function onLoginSubmit(event) {
   const username = loginInput.value;    // loginInput의 value = 내가 입력한 값
 
   // localStorage에 username 저장하기
-  localStorage.setItem("username", username);
+  localStorage.setItem(USERNAME_KEY, username);
+  paintGreetings(username);
+}
 
-  /*h1에 text 값 넣기(방법 2가지)*/
-  //greeting.innerText = "Hello " + username;   // +로 연결
-  greeting.innerText = `Hello ${username}`;     // 백틱 기호, ${변수명}
-
-  // greeting hidden 해제(greeting classList에 className 삭제하기)
+// greeting에 text 넣고, 보여줌
+function paintGreetings(username) {
+  greeting.innerText = `Hello ${username}`;  
   greeting.classList.remove(HIDDEN_CLASSNAME);
 }
 
-// submit event 발생시, onLoginSubmit(event) 호출됨
-// event: js가 현재 발생한 일에 대한 정보를 줌
-loginForm.addEventListener("submit", onLoginSubmit);
+// localStorage에 key에 해당하는 value값 유무 확인
+const savedUsername = localStorage.getItem(USERNAME_KEY);
+
+if (savedUsername === null) {
+  // localStorage에 username없으면 form 보여줌
+  loginForm.classList.remove(HIDDEN_CLASSNAME);
+
+  // submit event 발생시, onLoginSubmit(event) 호출됨
+  // event: js가 현재 발생한 일에 대한 정보를 줌
+  loginForm.addEventListener("submit", onLoginSubmit);
+
+} else {
+  // localStorage에 username있으면 greeting text 넣고 보여줌 
+  paintGreetings(savedUsername);
+}
