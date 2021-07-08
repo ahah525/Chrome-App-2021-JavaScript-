@@ -17,16 +17,19 @@ function onLoginSubmit(event) {
 
   // localStorage에 username 저장하기
   localStorage.setItem(USERNAME_KEY, username);
-  paintGreetings(username);
+  paintGreetings();
 }
 
 // greeting에 text 넣고, 보여줌
-function paintGreetings(username) {
+function paintGreetings() {
+  // localStorage에 key에 해당하는 value값 추출
+  const username = localStorage.getItem(USERNAME_KEY);
+
   greeting.innerText = `Hello ${username}`;  
   greeting.classList.remove(HIDDEN_CLASSNAME);
 }
 
-// localStorage에 key에 해당하는 value값 유무 확인
+
 const savedUsername = localStorage.getItem(USERNAME_KEY);
 
 if (savedUsername === null) {
@@ -39,5 +42,5 @@ if (savedUsername === null) {
 
 } else {
   // localStorage에 username있으면 greeting text 넣고 보여줌 
-  paintGreetings(savedUsername);
+  paintGreetings();
 }
